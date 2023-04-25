@@ -21,6 +21,7 @@ export class PostsController {
     postsServices
       .findPostById(parseInt(id))
       .then((result) => {
+        if (!result.id) res.status(404).json("Not found");
         res.status(200).send(result);
       })
       .catch((error) => {
