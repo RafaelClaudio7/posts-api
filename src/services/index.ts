@@ -13,7 +13,7 @@ export class PostsServices {
     });
   }
 
-  findPostById(id: number) {
+  async findPostById(id: number) {
     return new Promise<IPost>((resolve, reject) => {
       pool.query(
         `SELECT * FROM posts where id = ${id}`,
@@ -27,7 +27,7 @@ export class PostsServices {
     });
   }
 
-  addPost(post: IPost): Promise<boolean> {
+  async addPost(post: IPost): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       pool.query(
         `insert into posts (user_id, title, body) values (${post.user_id}, '${post.title}', '${post.body}');`,
@@ -42,7 +42,18 @@ export class PostsServices {
     });
   }
 
-  deletePost(id: number) {
-    console.log("delete * where post.id = id");
+  async deletePost(id: number): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      pool.query(
+        `DELETE FROM posts WHERE id = ${id}`,
+        (error: any, results) => {
+          if (error) {
+            reject(error);
+          }
+          console.log(results);
+          resolve(true);
+        }
+      );
+    });
   }
 }

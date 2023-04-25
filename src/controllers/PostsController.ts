@@ -18,9 +18,8 @@ export class PostsController {
 
   async list(req: Request, res: Response) {
     const { id } = req.params;
-    const number = parseInt(id);
     postsServices
-      .findPostById(number)
+      .findPostById(parseInt(id))
       .then((result) => {
         res.status(200).send(result);
       })
@@ -36,6 +35,18 @@ export class PostsController {
       .addPost(post)
       .then((result) => {
         res.status(201).send("Post created");
+      })
+      .catch((error) => {
+        res.status(500).send(error);
+      });
+  }
+
+  async delete(req: Request, res: Response) {
+    const { id } = req.params;
+    postsServices
+      .deletePost(parseInt(id))
+      .then((result) => {
+        if (result) res.status(204).send();
       })
       .catch((error) => {
         res.status(500).send(error);
