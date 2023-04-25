@@ -1,7 +1,8 @@
 import { IPost } from "../interfaces/interfacePost";
 import { pool } from "../shared/mysql";
+import { IPostsServices } from "./interfacePostServices";
 
-export class PostsServices {
+export class PostsServices implements IPostsServices {
   async findAllPosts(): Promise<IPost[]> {
     return new Promise<IPost[]>((resolve, reject) => {
       pool.query(`SELECT * FROM posts`, (error: any, results: IPost[]) => {
