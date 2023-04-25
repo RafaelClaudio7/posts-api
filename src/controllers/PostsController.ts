@@ -6,10 +6,10 @@ const postsServices = new PostsServices();
 export class PostsController {
   async listAll(req: Request, res: Response) {
     try {
-      const arr = await postsServices.findAllPosts();
-      res.status(200).send("OK");
+      const allPosts = await postsServices.findAllPosts();
+      res.status(200).json(allPosts);
     } catch (error) {
-      res.status(500).send("erro");
+      res.status(500).send(error);
     }
   }
 }

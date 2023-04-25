@@ -2,10 +2,14 @@ import { IPost } from "../interfaces/interfacePost";
 import { pool } from "../shared/mysql";
 
 export class PostsServices {
-  async findAllPosts() {
-    pool.query("SELECT * from posts", function (error: any, results) {
-      if (error) throw error;
-      return results;
+  async findAllPosts(): Promise<IPost[]> {
+    return new Promise<IPost[]>((resolve, reject) => {
+      pool.query(`SELECT * FROM posts`, (error: any, results: IPost[]) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(results);
+      });
     });
   }
 
