@@ -27,8 +27,19 @@ export class PostsServices {
     });
   }
 
-  addPost(obj: IPost) {
-    console.log("INSERT () INTO posts ....");
+  addPost(post: IPost): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      pool.query(
+        `insert into posts (user_id, title, body) values (${post.user_id}, '${post.title}', '${post.body}');`,
+        (error: any, results) => {
+          if (error) {
+            reject(error);
+          }
+          console.log(results);
+          resolve(true);
+        }
+      );
+    });
   }
 
   deletePost(id: number) {

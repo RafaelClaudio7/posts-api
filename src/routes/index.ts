@@ -8,3 +8,5 @@ const postsController = new PostsController();
 postsRouter.get("/posts", postsController.listAll);
 
 postsRouter.get("/posts/:id", postsController.list);
+
+postsRouter.post("/posts", postsController.add);
