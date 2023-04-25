@@ -14,7 +14,17 @@ export class PostsServices {
   }
 
   findPostById(id: number) {
-    console.log("select * from posts where posts.id = id");
+    return new Promise<IPost>((resolve, reject) => {
+      pool.query(
+        `SELECT * FROM posts where id = ${id}`,
+        (error: any, results: IPost) => {
+          if (error) {
+            reject(error);
+          }
+          resolve(results);
+        }
+      );
+    });
   }
 
   addPost(obj: IPost) {
